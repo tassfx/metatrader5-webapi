@@ -1,8 +1,14 @@
 <?php
 namespace CrystalApps\MetaTrader5\Objects;
+use CrystalApps\MetaTrader5\Helpers\CommandList;
 use CrystalApps\MetaTrader5\Traits\Response;
 use GuzzleHttp\Client;
+use JetBrains\PhpStorm\ExpectedValues;
 
+/**
+ * Class Mt5Client
+ * @package CrystalApps\MetaTrader5\Objects
+ */
 class Mt5Client
 {
     use Response;
@@ -17,6 +23,33 @@ class Mt5Client
     private string $agent;
     private int $build;
 
+    //Values
+    private ExpectedValues $expectedValues;
+
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function __construct(string $ip, int $port, string $password, string $agent, int $build)
+    {
+        $this->ip = $ip;
+        $this->port = $port;
+        $this->password = $password;
+        $this->agent = $agent;
+        $this->build = $build;
+
+        $this->client = new Client([
+            'base_uri' => $this->ip . ':' . $this->port,
+            'timeout' => 36000,
+            'verify' => false,
+        ]);
+
+        $this->auth();
+    }
+
+    /**
+     * MT5 Auth
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     private function auth()
     {
         if (!$this->client instanceof Client)
@@ -87,5 +120,10 @@ class Mt5Client
         }
 
         return $this->success('0 Done','OK!');
+    }
+
+    public function sendCommand(string $command, array $params)
+    {
+        //$command = new Command('')
     }
 }

@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "php": ">=7.2",
+    "php": ">=8.0",
     "guzzlehttp/guzzle": "7.*",
     "ext-mbstring": "*"
   },
@@ -18,5 +18,8 @@
     "psr-4": {
       "CrystalApps\\MetaTrader5\\": "src/"
     }
+  },
+  "require-dev": {
+    "vimeo/psalm": "^4.8"
   }
 }
