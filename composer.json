@@ -1,0 +1,21 @@
+{
+  "name": "vendor_name/metatrader5-webapi",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "crystal",
+      "email": "crystal@crystalapps.by"
+    }
+  ],
+  "require": {
+    "php": ">=7.2",
+    "guzzlehttp/guzzle": "7.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "CrystalApps\\MetaTrader5\\": "src/"
+    }
+  }
+}
