@@ -1,9 +1,8 @@
 <?php
 namespace CrystalApps\MetaTrader5\Objects;
-use CrystalApps\MetaTrader5\Helpers\CommandList;
 use CrystalApps\MetaTrader5\Traits\Response;
 use GuzzleHttp\Client;
-use JetBrains\PhpStorm\ExpectedValues;
+use GuzzleHttp\RequestOptions;
 
 /**
  * Class Mt5Client
@@ -23,18 +22,17 @@ class Mt5Client
     private string $agent;
     private int $build;
 
-    //Values
-    private ExpectedValues $expectedValues;
 
     /**
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function __construct(string $ip, int $port, string $password, string $agent, int $build)
+    public function __construct(string $ip, int $port, int $login, string $password, string $agent, int $build)
     {
         $this->ip = $ip;
         $this->port = $port;
         $this->password = $password;
         $this->agent = $agent;
+        $this->login = $login;
         $this->build = $build;
 
         $this->client = new Client([
@@ -119,11 +117,22 @@ class Mt5Client
             return $this->fail('Generic error', 'Auth answer error: rand buffs missmatch');
         }
 
-        return $this->success('0 Done','OK!');
+        return $this->success('0 Done','OK');
     }
 
-    public function sendCommand(string $command, array $params)
+
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function sendCommand(Command $command)
     {
-        //$command = new Command('')
+        $request = $this->client->request($command->method, $command->path,[RequestOptions::JSON => $command->params]);
+
+        if ($request->getStatusCode() != 200)
+        {
+            return $this->fail($request['retcode'], $request['answer']);
+        }
+
+        return new Result(json_decode($request->getBody(), true));
     }
 }

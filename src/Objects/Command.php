@@ -76,19 +76,10 @@ class Command
      * @param string $path
      * @param array $params
      */
-    public function __construct(#[ExpectedValues(self::METHOD_LIST)]string $path, array $params, #[ExpectedValues(['GET','POST'])]string $method = 'GET')
+    public function __construct(#[ExpectedValues(self::METHOD_LIST)]string $path, array $params = [], #[ExpectedValues(['GET','POST'])]string $method = 'POST')
     {
         $this->params = $params;
         $this->path = $path;
         $this->method = $method;
     }
-
-    public function fetchResult(Mt5Client &$client)
-    {
-        if (!$client instanceof Mt5Client)
-        {
-            return $this->fail('Generic error','Invalid function params');
-        }
-    }
-
 }
