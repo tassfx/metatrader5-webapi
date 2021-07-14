@@ -122,6 +122,7 @@ class Mt5Client
 
 
     /**
+     * Send command to mt5
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function sendCommand(Command $command)

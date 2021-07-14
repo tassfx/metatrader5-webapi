@@ -3,11 +3,27 @@ namespace CrystalApps\MetaTrader5\Objects;
 
 class Result
 {
+    /**
+     * MT5 Response
+     * @var array
+     */
     private array $data;
 
-    public function __construct(array $data)
+    /**
+     * Result constructor.
+     * @param array $data
+     * @param bool $unusedFields
+     */
+    public function __construct(array $data, bool $unusedFields = true)
     {
-        $this->data = $data;
+        if (!$unusedFields)
+        {
+            $this->data = $data['answer'];
+        }
+        else
+        {
+            $this->data = array_diff_key($data['answer'], array_flip(['ApiData']));
+        }
     }
 
     /**
@@ -18,8 +34,7 @@ class Result
     public function map(callable $fn)
     {
         $data = array_map($fn, $this->data);
-
-        return new Result($data);
+        return new self($data);
     }
 
     /**
@@ -30,8 +45,7 @@ class Result
     public function filter(callable $fn)
     {
         $data = array_filter($this->data,$fn);
-
-        return new Result($data);
+        return new self($data);
     }
 
     /**
