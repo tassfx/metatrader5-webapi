@@ -49,7 +49,7 @@ class Command
         '/api/document/history/get','/api/comment/add','/api/comment/update','/api/comment/delete','/api/comment/get',
         '/api/attachment/add','/api/attachment/get','/api/attachment/attach','/api/mail/send','/api/mail/get','/api/mail/get_body',
         '/api/news/send','/api/news/get','/api/news/get_body','/api/tick/last','/api/tick/last_group','/api/tick/stat',
-        '/api/tick/history','/api/chart/get','/api/book/get','/api/daily/get','/api/daily/get_light','/api/setting/get',
+        '/api/tick/history','/api/chart/get','/api/book/get','/api/daily_get','/api/daily/get_light','/api/setting/get',
         '/api/setting/set','/api/setting/delete','/api/subscription/join','/api/subscription/cancel','/api/subscription/add',
         '/api/subscription/update','/api/subscription/delete','/api/subscription/get','/api/subscription/exist','/api/subscription/history/add',
         '/api/subscription/history/update','/api/subscription/history/delete','/api/subscription/history/get','/api/common/get','/api/common/set',

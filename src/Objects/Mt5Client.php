@@ -126,7 +126,18 @@ class Mt5Client
      */
     public function sendCommand(Command $command)
     {
-        $request = $this->client->request($command->method, $command->path,[RequestOptions::JSON => $command->params]);
+        /**
+         * Передаю привет дегенератам с метаквотс
+         */
+        if ($command->method == 'GET')
+        {
+            $request = $this->client->request($command->method, $command->path,['query' => $command->params]);
+        }
+        else
+        {
+            $request = $this->client->request($command->method,$command->path,[RequestOptions::JSON => $command->params]);
+        }
+
 
         if ($request->getStatusCode() != 200)
         {

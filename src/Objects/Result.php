@@ -3,7 +3,7 @@ namespace CrystalApps\MetaTrader5\Objects;
 
 class Result
 {
-    public array $data;
+    private array $data;
 
     public function __construct(array $data)
     {
@@ -11,11 +11,35 @@ class Result
     }
 
     /**
-     * @param array $criteria
+     * Map instance
+     * @param callable $fn
+     * @return Result
+     */
+    public function map(callable $fn)
+    {
+        $data = array_map($fn, $this->data);
+
+        return new Result($data);
+    }
+
+    /**
+     * Filter instance
+     * @param callable $fn
+     * @return Result
+     */
+    public function filter(callable $fn)
+    {
+        $data = array_filter($this->data,$fn);
+
+        return new Result($data);
+    }
+
+    /**
+     * Returns the collection itself, not this
      * @return array
      */
-    public function only(array $criteria)
+    public function all()
     {
-        return array_intersect_key($this->data,array_flip($criteria));
+        return $this->data;
     }
 }
