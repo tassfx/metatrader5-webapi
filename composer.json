@@ -10,12 +10,17 @@
     }
   ],
   "require": {
-    "php": ">=7.2",
-    "guzzlehttp/guzzle": "7.*"
+    "php": ">=8.0",
+    "guzzlehttp/guzzle": "7.*",
+    "ext-mbstring": "*"
   },
   "autoload": {
     "psr-4": {
       "CrystalApps\\MetaTrader5\\": "src/"
     }
+  },
+  "require-dev": {
+    "vimeo/psalm": "^4.8",
+    "phpunit/phpunit": "^9.5"
   }
 }
