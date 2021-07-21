@@ -1,6 +1,5 @@
 <?php
 namespace CrystalApps\MetaTrader5\Objects;
-use CrystalApps\MetaTrader5\Traits\Response;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 
@@ -10,8 +9,6 @@ use GuzzleHttp\RequestOptions;
  */
 class Mt5Client
 {
-    use Response;
-
     private Client $client;
 
     //Params
@@ -52,7 +49,7 @@ class Mt5Client
     {
         if (!$this->client instanceof Client)
         {
-            return $this->fail('Generic error', 'Guzzle is not initialized! R u ok?');
+            return new Result(['message' => 'Generic error: guzzle is not init'],500);
         }
 
         $params = [
@@ -66,14 +63,14 @@ class Mt5Client
 
         if ($result->getStatusCode() != 200)
         {
-            return $this->fail('Generic error', $result->getStatusCode());
+            return new Result(['message' => 'Generic error'],$result->getStatusCode());
         }
 
         $result = json_decode($result->getBody(), true);
 
         if ($result['retcode'] != '0 Done')
         {
-            return $this->fail($result['retcode'],$result['answer']);
+            return new Result(['message' => $result['retcode'].':'.$result['answer']],500);
         }
 
         /**
@@ -97,14 +94,14 @@ class Mt5Client
 
         if ($result->getStatusCode() != 200)
         {
-            return $this->fail('Generic error', $result->getStatusCode());
+            return new Result(['message' => 'Generic error'],$result->getStatusCode());
         }
 
         $result = json_decode($result->getBody(), true);
 
         if ($result['retcode'] != '0 Done')
         {
-            return $this->fail($result['retcode'],$result['answer']);
+            return new Result(['message' => $result['retcode'].':'.$result['answer']],500);
         }
 
         /**
@@ -114,10 +111,10 @@ class Mt5Client
 
         if ($cliRandAnswer != $result['cli_rand_answer'])
         {
-            return $this->fail('Generic error', 'Auth answer error: rand buffs missmatch');
+            return new Result(['message' => 'Auth answer error: rand buffs missmatch'],500);
         }
 
-        return $this->success('0 Done','OK');
+        return new Result(['message' => 'Auth OK']);
     }
 
 
@@ -142,7 +139,7 @@ class Mt5Client
 
         if ($request->getStatusCode() != 200)
         {
-            return $this->fail($request['retcode'], $request['answer']);
+            return new Result(['message' => 'Command error'],$request->getStatusCode());
         }
 
         return new Result(json_decode($request->getBody(), true));

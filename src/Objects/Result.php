@@ -10,19 +10,31 @@ class Result
     private array $data;
 
     /**
+     * Response Code
+     * @var int
+     */
+    private int $code;
+
+    /**
      * Result constructor.
      * @param array $data
      * @param bool $unusedFields
      */
-    public function __construct(array $data, bool $unusedFields = true)
+    public function __construct(array $data, int $code = 200, bool $unusedFields = true)
     {
+        if ($code == 200 && $unusedFields = true)
+        {
+            $this->data = array_diff_key($data['answer'], array_flip(['ApiData']));
+        }
+
+        if ($code != 200)
+        {
+            $this->data = $data;
+        }
+
         if (!$unusedFields)
         {
             $this->data = $data['answer'];
-        }
-        else
-        {
-            $this->data = array_diff_key($data['answer'], array_flip(['ApiData']));
         }
     }
 
