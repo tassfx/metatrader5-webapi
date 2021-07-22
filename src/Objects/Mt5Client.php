@@ -114,7 +114,7 @@ class Mt5Client
             return new Result(['answer' => ['message' => 'Auth answer error: rand buffs missmatch']],500);
         }
 
-        return new Result(['answer' => 'Auth OK']);
+        return new Result(['answer' => ['message' => 'Auth OK']]);
     }
 
 
