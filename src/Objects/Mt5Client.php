@@ -49,7 +49,7 @@ class Mt5Client
     {
         if (!$this->client instanceof Client)
         {
-            return new Result(['message' => 'Generic error: guzzle is not init'],500);
+            return new Result(['answer' => ['message' => 'Generic error: guzzle is not init']],500);
         }
 
         $params = [
@@ -63,14 +63,14 @@ class Mt5Client
 
         if ($result->getStatusCode() != 200)
         {
-            return new Result(['message' => 'Generic error'],$result->getStatusCode());
+            return new Result(['answer' => ['message' => 'Generic error']],$result->getStatusCode());
         }
 
         $result = json_decode($result->getBody(), true);
 
         if ($result['retcode'] != '0 Done')
         {
-            return new Result(['message' => $result['retcode'].':'.$result['answer']],500);
+            return new Result(['answer' => ['message' => $result['retcode'].':'.$result['answer']]],500);
         }
 
         /**
@@ -94,14 +94,14 @@ class Mt5Client
 
         if ($result->getStatusCode() != 200)
         {
-            return new Result(['message' => 'Generic error'],$result->getStatusCode());
+            return new Result(['answer' => ['message' => 'Generic error']],$result->getStatusCode());
         }
 
         $result = json_decode($result->getBody(), true);
 
         if ($result['retcode'] != '0 Done')
         {
-            return new Result(['message' => $result['retcode'].':'.$result['answer']],500);
+            return new Result(['answer' => ['message' => $result['retcode'].':'.$result['answer']]],500);
         }
 
         /**
@@ -111,10 +111,10 @@ class Mt5Client
 
         if ($cliRandAnswer != $result['cli_rand_answer'])
         {
-            return new Result(['message' => 'Auth answer error: rand buffs missmatch'],500);
+            return new Result(['answer' => ['message' => 'Auth answer error: rand buffs missmatch']],500);
         }
 
-        return new Result(['message' => 'Auth OK']);
+        return new Result(['answer' => 'Auth OK']);
     }
 
 
@@ -139,7 +139,7 @@ class Mt5Client
 
         if ($request->getStatusCode() != 200)
         {
-            return new Result(['message' => 'Command error'],$request->getStatusCode());
+            return new Result(['answer' => ['message' => 'Generic error']],$request->getStatusCode());
         }
 
         return new Result(json_decode($request->getBody(), true));
