@@ -38,12 +38,17 @@ class Result
         }
     }
 
+    public function getCode(): int
+    {
+        return $this->code;
+    }
+
     /**
      * Map instance
      * @param callable $fn
      * @return Result
      */
-    public function map(callable $fn)
+    public function map(callable $fn): Result
     {
         $data = array_map($fn, $this->data);
         return new self($data);
@@ -54,7 +59,7 @@ class Result
      * @param callable $fn
      * @return Result
      */
-    public function filter(callable $fn)
+    public function filter(callable $fn): Result
     {
         $data = array_filter($this->data,$fn);
         return new self($data);
@@ -64,7 +69,7 @@ class Result
      * Returns the collection itself, not this
      * @return array
      */
-    public function all()
+    public function all(): array
     {
         return $this->data;
     }
