@@ -37,6 +37,11 @@ class Result
             $this->data = $data['answer'];
         }
     }
+    
+    public function getCode()
+    {
+        return $this->code;
+    }
 
     /**
      * Map instance
