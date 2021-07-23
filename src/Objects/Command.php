@@ -1,6 +1,5 @@
 <?php
 namespace CrystalApps\MetaTrader5\Objects;
-use CrystalApps\MetaTrader5\Traits\Response;
 use JetBrains\PhpStorm\ExpectedValues;
 
 /**
@@ -9,7 +8,6 @@ use JetBrains\PhpStorm\ExpectedValues;
  */
 class Command
 {
-    use Response;
     /**
      * Command path
      * <b>a full-fledged path is used!</b>

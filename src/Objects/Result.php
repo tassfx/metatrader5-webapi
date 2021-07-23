@@ -20,22 +20,10 @@ class Result
      * @param array $data
      * @param bool $unusedFields
      */
-    public function __construct(array $data, int $code = 200, bool $unusedFields = true)
+    public function __construct(array $data, int $code = 200)
     {
-        if ($code == 200 && $unusedFields = true)
-        {
-            $this->data = array_diff_key($data['answer'], array_flip(['ApiData']));
-        }
-
-        if ($code != 200)
-        {
-            $this->data = $data;
-        }
-
-        if (!$unusedFields)
-        {
-            $this->data = $data['answer'];
-        }
+       $this->data = $data;
+       $this->code = $code;
     }
     
     public function getCode()
