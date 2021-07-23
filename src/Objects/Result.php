@@ -25,12 +25,7 @@ class Result
        $this->data = $data;
        $this->code = $code;
     }
-    
-    public function getCode()
-    {
-        return $this->code;
-    }
-
+   
     public function getCode(): int
     {
         return $this->code;
